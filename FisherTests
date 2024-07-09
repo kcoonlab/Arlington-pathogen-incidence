@@ -1,0 +1,70 @@
+library(rstatix)
+library(readxl)
+library(dplyr)
+library(tidyr)
+setwd("C:/Users/asomm/OneDrive/Desktop/Documents/Project/Pathogen Incidence Project/Submission")
+
+
+
+### Table 6
+
+Table6 <- read_excel("Table_RImport.xlsx", sheet = "Table6")
+
+results <- data.frame(Group = character(), Taxa = character(), P_Value = numeric(), stringsAsFactors = FALSE)
+
+comparisons <- unique(Table6$Group)
+
+#Choose
+taxa <- c("Enterobactericea", "Escherichia", "Klebsiella", "Pantoea", "Pseudomonas")
+
+for (comp in comparisons) {
+  data_comp <- Table6 %>% filter(Group == comp)
+  
+  for (taxon in taxa) {
+    contingency_table <- matrix(c(data_comp[[taxon]][1], data_comp$total[1] - data_comp[[taxon]][1],
+                                  data_comp[[taxon]][2], data_comp$total[2] - data_comp[[taxon]][2]),
+                                nrow = 2, byrow = TRUE)
+    test_result <- fisher.test(contingency_table)
+    results <- rbind(results, data.frame(Group = comp, Taxa = taxon, P_Value = test_result$p.value))
+  }
+}
+
+results$P_Value <- round(results$P_Value, 2)
+results$Group <- factor(results$Group, levels = unique(Table6$Group))
+print(results)
+
+results %>%
+  pivot_wider(names_from = Taxa, values_from = P_Value) %>%
+  arrange(Group)
+
+
+
+###Table 7
+
+Table7 <- read_excel("Table_RImport.xlsx", sheet = "Table7")
+
+results <- data.frame(Group = character(), Taxa = character(), P_Value = numeric(), stringsAsFactors = FALSE)
+
+comparisons <- unique(Table6$Group)
+
+taxa <- c("Bacillus", "Enterococcus", "Mammaliicoccus", "Staphylococcus", "Staphylococcaceae")
+
+for (comp in comparisons) {
+  data_comp <- Table7 %>% filter(Group == comp)
+  
+  for (taxon in taxa) {
+    contingency_table <- matrix(c(data_comp[[taxon]][1], data_comp$total[1] - data_comp[[taxon]][1],
+                                  data_comp[[taxon]][2], data_comp$total[2] - data_comp[[taxon]][2]),
+                                nrow = 2, byrow = TRUE)
+    test_result <- fisher.test(contingency_table)
+    results <- rbind(results, data.frame(Group = comp, Taxa = taxon, P_Value = test_result$p.value))
+  }
+}
+
+results$P_Value <- round(results$P_Value, 2)
+results$Group <- factor(results$Group, levels = unique(Table7$Group))
+print(results)
+
+results %>%
+  pivot_wider(names_from = Taxa, values_from = P_Value) %>%
+  arrange(Group)
