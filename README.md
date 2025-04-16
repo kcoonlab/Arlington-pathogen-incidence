@@ -1,4 +1,4 @@
-**Repository for in review manuscript: "Incidence rates of clinically relevant bacterial taxa in biting Stomoxys flies on a Wisconsin dairy farm"** 
+**Repository manuscript: "Sommer, A. J., Deblois, C. L., Tu, A. D., Suen, G., & Coon, K. L. (2025). Opportunistic pathogens are prevalent across the culturable exogenous and endogenous microbiota of stable flies captured at a dairy facility. Veterinary Research, 56, 40."** 
 
 In this study, bacteria were cultured from internal homogenates and external surfaces of Stomoxys flies captured from a dairy farm in Wisconsin. Sample pool information is as follows:
 
